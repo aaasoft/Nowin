@@ -1,18 +1,27 @@
-<?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata>
-    <id>Nowin</id>
-    <version>$version$</version>
-    <authors>Boris Letocha</authors>
-    <owners>Boris Letocha</owners>
-    <copyright>Boris Letocha</copyright>
-    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
-    <projectUrl>http://github.com/Bobris/Nowin</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Fast Owin Web server in pure .Net without reliance on HttpListener or Win8, includes WebSockets and SSL support</description>
-    <summary>Owin Web server in pure .Net</summary>
-    <tags>webserver owin http websockets</tags>
-    <dependencies>
-    </dependencies>
-  </metadata>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Nowin40</id>
+        <version>0.22.0</version>
+        <title>Nowin (for .NET 4.0)</title>
+        <authors>Boris Letocha</authors>
+        <owners>Boris Letocha</owners>
+        <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+        <projectUrl>https://github.com/aaasoft/Nowin</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>(Just depend on .NET 4.0，not .NET 4.5)
+Fast Owin Web server in pure .Net without reliance on HttpListener or Win8, includes WebSockets and SSL support</description>
+        <summary>(Just depend on .NET 4.0，not .NET 4.5)
+Owin Web server in pure .Net 4.0</summary>
+        <copyright>Boris Letocha</copyright>
+        <tags>webserver owin http websockets</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.0">
+                <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\Nowin.dll" target="lib\net40\Nowin.dll" />
+    </files>
 </package>
