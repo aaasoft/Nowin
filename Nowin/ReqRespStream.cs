@@ -50,10 +50,10 @@ namespace Nowin
             return ReadOverflowAsync().Result;
         }
 
-        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        public Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             ReadSyncPart(buffer, offset, count);
-            if (_asyncCount == 0) return Task.FromResult(_asyncResult);
+            if (_asyncCount == 0) return TaskEx.FromResult(_asyncResult);
             return ReadOverflowAsync();
         }
 
@@ -184,7 +184,7 @@ namespace Nowin
             FlushAsync(CancellationToken.None).Wait();
         }
 
-        public override Task FlushAsync(CancellationToken cancellationToken)
+        public Task FlushAsync(CancellationToken cancellationToken)
         {
             return FlushAsyncCore();
         }
@@ -213,14 +213,14 @@ namespace Nowin
             WriteAsync(buffer, offset, count, CancellationToken.None).Wait();
         }
 
-        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        public Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             if (count <= _responseMaxLen - ResponseLocalPos)
             {
                 Array.Copy(buffer, offset, _buf, ResponseStartOffset + ResponseLocalPos, count);
                 _responsePosition += (ulong)count;
                 ResponseLocalPos += count;
-                return Task.Delay(0);
+                return TaskEx.Delay(0);
             }
             return WriteOverflowAsync(buffer, offset, count);
         }

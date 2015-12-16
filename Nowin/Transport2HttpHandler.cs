@@ -849,13 +849,13 @@ namespace Nowin
                 if (_buffer != buffer) throw new InvalidOperationException();
                 if (_isMethodHead)
                     len = 0;
-                if (len == 0) return Task.Delay(0);
+                if (len == 0) return TaskEx.Delay(0);
                 WrapInChunk(_buffer, ref startOffset, ref len);
             }
             else
             {
                 if (_isMethodHead)
-                    return Task.Delay(0);
+                    return TaskEx.Delay(0);
             }
             if (!_isMethodHead && _responseContentLength != ulong.MaxValue && _reqRespStream.ResponseLength > _responseContentLength)
             {

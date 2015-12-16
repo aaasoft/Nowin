@@ -66,7 +66,7 @@ namespace Nowin
                 return ReadOverflowAsync(buffer, offset, count, null, null).Result;
             }
 
-            public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            public Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
                 return ReadOverflowAsync(buffer, offset, count, null, null);
             }
@@ -96,8 +96,9 @@ namespace Nowin
                 }
                 catch (AggregateException ex)
                 {
-                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                    throw;
+                    if (ex.InnerException != null)
+                        throw ex.InnerException;
+                    throw ex;
                 }
             }
 
@@ -123,7 +124,7 @@ namespace Nowin
                 WriteAsync(buffer, offset, count, CancellationToken.None).Wait();
             }
 
-            public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            public Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
                 _tcsSend = new TaskCompletionSource<object>();
                 _owner.Callback.StartSend(buffer, offset, count);
@@ -146,8 +147,9 @@ namespace Nowin
                 }
                 catch (AggregateException ex)
                 {
-                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                    throw;
+                    if (ex.InnerException != null)
+                        throw ex.InnerException;
+                    throw ex;
                 }
             }
 

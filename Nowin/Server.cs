@@ -32,7 +32,7 @@ namespace Nowin
             var cc = Interlocked.Increment(ref ConnectedCount);
             var add = _connectionAllocationStrategy.CalculateNewConnectionCount(AllocatedConnections, cc);
             if (add <= 0) return;
-            Task.Run(() =>
+            TaskEx.Run(() =>
                 {
                     lock (_newConnectionLock)
                     {

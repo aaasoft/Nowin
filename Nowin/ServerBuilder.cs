@@ -12,7 +12,7 @@ namespace Nowin
         IConnectionAllocationStrategy _connectionAllocationStrategy;
         IPEndPoint _endPoint;
         X509Certificate _certificate;
-        SslProtocols _protocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12;
+        SslProtocols _protocols = SslProtocols.Tls;
         int _bufferSize;
         Func<IDictionary<string, object>, Task> _app;
         IDictionary<string, object> _capabilities;
