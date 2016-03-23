@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -1399,6 +1400,30 @@ namespace NowinTests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Equal("customvalue", response.Headers.GetValues("custom-header").First());
                 Assert.Equal("goodvalue", response.Headers.GetValues("custom-header2").First());
+            }
+        }
+
+        [Fact]
+        public void TwoClientsSendRequests()
+        {
+            var listener = CreateServerSync(
+                env =>
+                {
+                    var response = env.Get<Stream>("owin.ResponseBody");
+                    var data = Encoding.ASCII.GetBytes("foobar");
+                    response.Write(data, 0, data.Length);
+                });
+
+            using (listener)
+            {
+                for (var i = 0; i < 2; ++i)
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var response = client.PostAsync(HttpClientAddress, new StringContent(SampleContent)).Result;
+                        Assert.Equal("foobar", response.Content.ReadAsStringAsync().Result);
+                    }
+                }
             }
         }
 

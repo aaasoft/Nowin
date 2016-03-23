@@ -112,7 +112,14 @@ namespace Nowin
                 {
                     _tcsSend.SetException(exception);
                 }
-                _callbackSend?.Invoke(_tcsSend.Task);
+                try
+                {
+                    _callbackSend?.Invoke(_tcsSend.Task);
+                }
+                catch (NullReferenceException)
+                {
+                    // do nothing
+                }
             }
 
             public override void Flush()
