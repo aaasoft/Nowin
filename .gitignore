@@ -19,3 +19,4 @@ TestResults
 *.DotSettings
 /Nowin.sln.ide
 .vs
+/packages/
